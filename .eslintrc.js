@@ -6,6 +6,9 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  parserOptions: {
+    sourceType: 'module'
+  },
   // 继承配置
   extends: [
     '@shoppingzh'
