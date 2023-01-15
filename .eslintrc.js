@@ -6,14 +6,20 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  parser: '@typescript-eslint/parser',
+  
   parserOptions: {
     sourceType: 'module'
   },
-  // 继承配置
+  plugins: [
+    '@typescript-eslint',
+  ],
   extends: [
-    '@shoppingzh'
+    '@shoppingzh',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     'array-bracket-newline': [0],
+    '@typescript-eslint/no-var-requires': [0],
   }
 }
