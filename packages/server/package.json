@@ -1,7 +1,6 @@
 {
-  "name": "server",
+  "name": "kongming-server",
   "version": "1.0.0",
-  "description": "",
   "private": true,
   "egg": {
     "declarations": true
@@ -36,7 +35,5 @@
   "repository": {
     "type": "git",
     "url": ""
-  },
-  "author": "",
-  "license": "MIT"
+  }
 }
