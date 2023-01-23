@@ -1,39 +1,52 @@
 {
   "name": "kongming-server",
   "version": "1.0.0",
+  "description": "孔明工具箱服务端",
   "private": true,
   "egg": {
+    "typescript": true,
     "declarations": true
   },
-  "dependencies": {
-    "egg": "^3",
-    "egg-scripts": "^2"
-  },
-  "devDependencies": {
-    "egg-bin": "^5",
-    "egg-ci": "^2",
-    "egg-mock": "^5"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-server",
-    "stop": "egg-scripts stop --title=egg-server-server",
+    "start": "egg-scripts start --daemon --title=egg-server-kongming-server",
+    "stop": "egg-scripts stop --title=egg-server-kongming-server",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
+    "test": "npm run lint -- --fix && npm run test-local",
     "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov"
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "eslint . --ext .ts --resolve-plugins-relative-to .",
+    "clean": "ets clean"
+  },
+  "dependencies": {
+    "egg": "^2.6.1",
+    "egg-scripts": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
+    "@eggjs/tsconfig": "^1.0.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-ci": "^2.1.0",
+    "egg-bin": "^4.11.0",
+    "egg-mock": "^3.16.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "ci": {
-    "version": "16, 18",
-    "type": "github"
+    "version": "14, 16, 18"
   },
   "repository": {
     "type": "git",
     "url": ""
-  }
+  },
+  "eslintIgnore": ["coverage"],
+  "author": "xpzheng",
+  "license": "MIT"
 }
