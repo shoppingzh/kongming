@@ -1,5 +1,9 @@
 {
   "extends": "@eggjs/tsconfig",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
   "exclude": [
     "app/public",
     "app/views",

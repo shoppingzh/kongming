@@ -15,6 +15,26 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   }
 
+  config.typeorm = {
+    type: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: 'xpzheng',
+    database: 'test',
+    synchronize: true,
+    logging: false,
+    entities: ['app/entity/**/*.ts'],
+    migrations: ['app/migration/**/*.ts'],
+    subscribers: ['app/subscriber/**/*.ts'],
+    cli: {
+      entitiesDir: 'app/entity',
+      migrationsDir: 'app/migration',
+      subscribersDir: 'app/subscriber',
+    },
+
+  }
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
