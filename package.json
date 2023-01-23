@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "husky install",
     "docs:dev": "pnpm run -C packages/docs dev",
+    "docs:build": "pnpm run -C packages/docs build",
     "lint": "eslint packages/**/*.{js,ts,jsx,tsx,vue}",
     "server:dev": "pnpm run -C packages/server dev"
   },
