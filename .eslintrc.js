@@ -7,19 +7,14 @@ module.exports = {
     es6: true,
   },
   parser: '@typescript-eslint/parser',
-  
+
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
   },
-  plugins: [
-    '@typescript-eslint',
-  ],
-  extends: [
-    '@shoppingzh',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  plugins: ['@typescript-eslint'],
+  extends: ['@shoppingzh', 'plugin:@typescript-eslint/recommended', 'prettier'],
   rules: {
     'array-bracket-newline': [0],
     '@typescript-eslint/no-var-requires': [0],
-  }
+  },
 }

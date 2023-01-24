@@ -7,18 +7,22 @@
     "docs:dev": "pnpm run -C packages/docs dev",
     "docs:build": "pnpm run -C packages/docs build",
     "lint": "eslint packages/**/*.{js,ts,jsx,tsx,vue}",
-    "server:dev": "pnpm run -C packages/server dev"
+    "server:dev": "pnpm run -C packages/server dev",
+    "format": "prettier *.{js,ts,jsx,tsx} --write"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
     "@shoppingzh/eslint-config": "^1.0.0",
     "@types/eslint": "^8.4.10",
+    "@types/prettier": "^2.7.2",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3",
     "typescript": "^4.9.4"
   }
 }
