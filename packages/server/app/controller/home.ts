@@ -1,12 +1,7 @@
-import { Controller } from 'egg'
-import { User } from '../entity/User'
+import BaseController from './base'
 
-export default class HomeController extends Controller {
+export default class HomeController extends BaseController {
   public async index() {
-    const { ctx } = this
-    const user = new User()
-    user.name = 'zxp'
-    await ctx.repo.User.insert(user)
-    ctx.body = await ctx.repo.User.find()
+    this.ctx.body = 'Hello, kongming!'
   }
 }

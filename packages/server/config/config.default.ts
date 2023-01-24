@@ -5,7 +5,7 @@ export default (appInfo: EggAppInfo) => {
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
-  config.keys = `${appInfo.name }_1674470756653_995`
+  config.keys = `${appInfo.name}_1674470756653_995`
 
   // add your egg config in here
   config.middleware = []
@@ -21,7 +21,7 @@ export default (appInfo: EggAppInfo) => {
     port: 3306,
     username: 'root',
     password: 'xpzheng',
-    database: 'test',
+    database: 'kongming',
     synchronize: true,
     logging: false,
     entities: ['app/entity/**/*.ts'],
@@ -32,12 +32,20 @@ export default (appInfo: EggAppInfo) => {
       migrationsDir: 'app/migration',
       subscribersDir: 'app/subscriber',
     },
-
   }
 
   // the return config will combines to EggAppConfig
   return {
     ...config,
     ...bizConfig,
+    security: {
+      csrf: {
+        enable: false,
+      },
+    },
+    cors: {
+      origin: '*',
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    },
   }
 }

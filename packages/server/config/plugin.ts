@@ -10,6 +10,10 @@ const plugin: EggPlugin = {
     enable: true,
     package: '@forsigner/egg-typeorm',
   },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
 }
 
 export default plugin
