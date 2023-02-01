@@ -5,4 +5,5 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index)
   router.post('/api/category', controller.category.create)
+  router.get('/api/category', controller.category.list)
 }
