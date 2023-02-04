@@ -16,4 +16,9 @@ export default class CategoryService extends BaseService {
   public async remove(id: number) {
     return await this.ctx.repo.Category.remove(new Category(id))
   }
+
+  public async update(category: Category) {
+    category.gmtModify = new Date()
+    return await this.ctx.repo.Category.update(category.id, category)
+  }
 }

@@ -9,6 +9,14 @@ export default class CategoryController extends BaseController {
     this.success(result.identifiers[0].id)
   }
 
+  public async update() {
+    const { ctx } = this
+    const result = await ctx.service.categoryService.update(
+      ctx.request.body as Category
+    )
+    result.affected ? this.success(result) : this.failed()
+  }
+
   public async list() {
     const { ctx } = this
     const list = await this.ctx.service.categoryService.list(
