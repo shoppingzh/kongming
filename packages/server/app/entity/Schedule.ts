@@ -1,20 +1,19 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class Category {
+export class Schedule {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
-  name: string
+  percent: number
+
+  @Column()
+  description: string
 
   @Column()
   gmtCreate: Date
 
-  @Column({ nullable: true })
+  @Column()
   gmtModify: Date
-
-  constructor(id: number) {
-    this.id = id
-  }
 }

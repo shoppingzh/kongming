@@ -2,14 +2,14 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg'
-import ExportBase from '../../../app/controller/base'
-import ExportCategory from '../../../app/controller/category'
-import ExportHome from '../../../app/controller/home'
+import ExportBaseController from '../../../app/controller/BaseController'
+import ExportCategoryController from '../../../app/controller/CategoryController'
+import ExportHomeController from '../../../app/controller/HomeController'
 
 declare module 'egg' {
   interface IController {
-    base: ExportBase
-    category: ExportCategory
-    home: ExportHome
+    baseController: ExportBaseController
+    categoryController: ExportCategoryController
+    homeController: ExportHomeController
   }
 }

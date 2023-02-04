@@ -11,10 +11,14 @@ type AutoInstanceType<
 > = U extends AnyClass ? InstanceType<U> : U
 import ExportBaseService from '../../../app/service/BaseService'
 import ExportCategoryService from '../../../app/service/CategoryService'
+import ExportScheduleService from '../../../app/service/ScheduleService'
+import ExportTaskService from '../../../app/service/TaskService'
 
 declare module 'egg' {
   interface IService {
     baseService: AutoInstanceType<typeof ExportBaseService>
     categoryService: AutoInstanceType<typeof ExportCategoryService>
+    scheduleService: AutoInstanceType<typeof ExportScheduleService>
+    taskService: AutoInstanceType<typeof ExportTaskService>
   }
 }

@@ -17,5 +17,6 @@ module.exports = {
     'array-bracket-newline': [0],
     '@typescript-eslint/no-var-requires': [0],
     'id-blacklist': [0],
+    'no-param-reassign': [0],
   },
 }
