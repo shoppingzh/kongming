@@ -1,20 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity } from 'typeorm'
+import { Base } from './Base'
 
 @Entity()
-export class Category {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class Category extends Base {
   @Column()
   name: string
-
-  @Column()
-  gmtCreate: Date
-
-  @Column({ nullable: true })
-  gmtModify: Date
-
-  constructor(id: number) {
-    this.id = id
-  }
 }

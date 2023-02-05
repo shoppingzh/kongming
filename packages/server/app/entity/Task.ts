@@ -1,11 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne } from 'typeorm'
+import { Base } from './Base'
 import { Category } from './Category'
 
 @Entity()
-export class Task {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class Task extends Base {
   @Column()
   title: string
 
@@ -29,12 +27,6 @@ export class Task {
 
   @Column()
   endTime: Date
-
-  @Column()
-  gmtCreate: Date
-
-  @Column({ nullable: true })
-  gmtModify: Date
 
   @ManyToOne(() => Category, { nullable: false })
   category: Category

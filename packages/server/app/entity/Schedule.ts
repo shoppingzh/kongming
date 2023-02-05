@@ -1,19 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity } from 'typeorm'
+import { Base } from './Base'
 
 @Entity()
-export class Schedule {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class Schedule extends Base {
   @Column()
   percent: number
 
   @Column()
   description: string
-
-  @Column()
-  gmtCreate: Date
-
-  @Column()
-  gmtModify: Date
 }
