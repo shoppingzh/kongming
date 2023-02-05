@@ -28,6 +28,6 @@ export class Task extends Base {
   @Column()
   endTime: Date
 
-  @ManyToOne(() => Category, { nullable: false })
+  @ManyToOne(() => Category, { nullable: false, eager: true })
   category: Category
 }

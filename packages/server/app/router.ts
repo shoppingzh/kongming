@@ -12,4 +12,5 @@ export default (app: Application) => {
 
   router.post('/api/task', controller.taskController.create)
   router.delete('/api/task', controller.taskController.remove)
+  router.get('/api/task', controller.taskController.list)
 }

@@ -10,4 +10,13 @@ export default class TaskService extends BaseService {
   public async remove(id: number) {
     return await this.ctx.repo.Task.remove(new Task(id))
   }
+
+  public async list(task: Task) {
+    return await this.ctx.repo.Task.find({
+      where: task,
+      relations: {
+        category: true,
+      },
+    })
+  }
 }

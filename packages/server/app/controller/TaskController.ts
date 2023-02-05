@@ -16,4 +16,10 @@ export default class TaskController extends BaseController {
     )
     this.success(result)
   }
+
+  public async list() {
+    const { ctx } = this
+    const result = await ctx.service.taskService.list(ctx.request.body)
+    this.success(result)
+  }
 }
