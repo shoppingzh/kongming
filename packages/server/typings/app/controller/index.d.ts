@@ -5,11 +5,13 @@ import 'egg'
 import ExportBaseController from '../../../app/controller/BaseController'
 import ExportCategoryController from '../../../app/controller/CategoryController'
 import ExportHomeController from '../../../app/controller/HomeController'
+import ExportTaskController from '../../../app/controller/TaskController'
 
 declare module 'egg' {
   interface IController {
     baseController: ExportBaseController
     categoryController: ExportCategoryController
     homeController: ExportHomeController
+    taskController: ExportTaskController
   }
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Category } from './Category'
 
 @Entity()
 export class Task {
@@ -8,19 +9,19 @@ export class Task {
   @Column()
   title: string
 
-  @Column()
+  @Column({ nullable: true })
   description: string
 
   @Column()
   target: string
 
-  @Column()
+  @Column({ default: 0 })
   important: number
 
-  @Column()
+  @Column({ default: 0 })
   urgent: number
 
-  @Column()
+  @Column({ default: 0 })
   weight: number
 
   @Column()
@@ -32,6 +33,9 @@ export class Task {
   @Column()
   gmtCreate: Date
 
-  @Column()
+  @Column({ nullable: true })
   gmtModify: Date
+
+  @ManyToOne(() => Category, { nullable: false })
+  category: Category
 }

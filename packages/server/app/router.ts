@@ -9,4 +9,6 @@ export default (app: Application) => {
   router.put('/api/category', controller.categoryController.update)
   router.get('/api/category', controller.categoryController.list)
   router.delete('/api/category', controller.categoryController.remove)
+
+  router.post('/api/task', controller.taskController.create)
 }
