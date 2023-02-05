@@ -8,4 +8,12 @@ export default class TaskController extends BaseController {
     const result = await ctx.service.taskService.create(task)
     this.success(result.identifiers[0].id)
   }
+
+  public async remove() {
+    const { ctx } = this
+    const result = await ctx.service.taskService.remove(
+      Number(ctx.request.query.id)
+    )
+    this.success(result)
+  }
 }

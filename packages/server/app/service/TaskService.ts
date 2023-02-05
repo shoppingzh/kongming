@@ -6,4 +6,8 @@ export default class TaskService extends BaseService {
     task.gmtCreate = new Date()
     return await this.ctx.repo.Task.insert(task)
   }
+
+  public async remove(id: number) {
+    return await this.ctx.repo.Task.remove(new Task(id))
+  }
 }

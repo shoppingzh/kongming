@@ -11,4 +11,5 @@ export default (app: Application) => {
   router.delete('/api/category', controller.categoryController.remove)
 
   router.post('/api/task', controller.taskController.create)
+  router.delete('/api/task', controller.taskController.remove)
 }
