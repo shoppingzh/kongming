@@ -11,6 +11,11 @@ export default (app: Application) => {
   router.delete('/api/category', controller.categoryController.remove)
 
   router.post('/api/task', controller.taskController.create)
+  router.put('/api/task', controller.taskController.update)
   router.delete('/api/task', controller.taskController.remove)
   router.get('/api/task', controller.taskController.list)
+
+  router.post('/api/schedule', controller.scheduleController.create)
+  router.delete('/api/schedule', controller.scheduleController.remove)
+  router.get('/api/schedule', controller.scheduleController.list)
 }

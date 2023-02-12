@@ -5,6 +5,7 @@ import 'egg'
 import ExportBaseController from '../../../app/controller/BaseController'
 import ExportCategoryController from '../../../app/controller/CategoryController'
 import ExportHomeController from '../../../app/controller/HomeController'
+import ExportScheduleController from '../../../app/controller/ScheduleController'
 import ExportTaskController from '../../../app/controller/TaskController'
 
 declare module 'egg' {
@@ -12,6 +13,7 @@ declare module 'egg' {
     baseController: ExportBaseController
     categoryController: ExportCategoryController
     homeController: ExportHomeController
+    scheduleController: ExportScheduleController
     taskController: ExportTaskController
   }
 }

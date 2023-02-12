@@ -1,11 +1,15 @@
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, ManyToOne } from 'typeorm'
 import { Base } from './Base'
+import { Task } from './Task'
 
 @Entity()
 export class Schedule extends Base {
   @Column()
   percent: number
 
-  @Column()
+  @Column({ nullable: true })
   description: string
+
+  @ManyToOne(() => Task, (task) => task.scheduleList)
+  task: Task
 }

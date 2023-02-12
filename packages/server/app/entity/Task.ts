@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import { Base } from './Base'
 import { Category } from './Category'
+import { Schedule } from './Schedule'
 
 @Entity()
 export class Task extends Base {
@@ -30,4 +31,7 @@ export class Task extends Base {
 
   @ManyToOne(() => Category, { nullable: false, eager: true })
   category: Category
+
+  @OneToMany(() => Schedule, (schedule) => schedule.task)
+  scheduleList: Schedule[]
 }

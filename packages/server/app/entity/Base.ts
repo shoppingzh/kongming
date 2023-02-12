@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class Base {
+export abstract class Base {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -11,7 +11,9 @@ export class Base {
   @Column({ nullable: true })
   gmtModify: Date
 
-  constructor(id: number) {
-    this.id = id
+  constructor(id?: number) {
+    if (id) {
+      this.id = id
+    }
   }
 }
