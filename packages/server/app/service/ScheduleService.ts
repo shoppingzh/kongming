@@ -11,6 +11,10 @@ export default class TaskService extends BaseService {
     return await this.ctx.repo.Schedule.remove(new Schedule(id))
   }
 
+  public async update(schedule: Schedule) {
+    return await BaseService.update(this.ctx.repo.Schedule, schedule)
+  }
+
   public async list(schedule: Schedule) {
     return await this.ctx.repo.Schedule.find({
       where: schedule,

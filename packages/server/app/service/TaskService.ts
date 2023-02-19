@@ -12,8 +12,7 @@ export default class TaskService extends BaseService {
   }
 
   public async update(task: Task) {
-    task.gmtModify = new Date()
-    return await this.ctx.repo.Task.update(task.id, task)
+    return await BaseService.update(this.ctx.repo.Task, task)
   }
 
   public async list(task: Task) {

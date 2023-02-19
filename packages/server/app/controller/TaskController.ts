@@ -22,7 +22,7 @@ export default class TaskController extends BaseController {
     const result = await ctx.service.taskService.update(
       ctx.request.body as Task
     )
-    result.affected ? this.success(result) : this.failed()
+    result ? this.success(result) : this.failed()
   }
 
   public async list() {

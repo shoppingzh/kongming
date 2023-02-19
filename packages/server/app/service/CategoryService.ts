@@ -7,18 +7,17 @@ export default class CategoryService extends BaseService {
     return await this.ctx.repo.Category.insert(category)
   }
 
-  public async list(category: Category) {
-    return await this.ctx.repo.Category.find({
-      where: category,
-    })
-  }
-
   public async remove(id: number) {
     return await this.ctx.repo.Category.remove(new Category(id))
   }
 
-  public async update(category: Category) {
-    category.gmtModify = new Date()
-    return await this.ctx.repo.Category.update(category.id, category)
+  public async update(category: Category): Promise<boolean> {
+    return await BaseService.update(this.ctx.repo.Category, category)
+  }
+
+  public async list(category: Category) {
+    return await this.ctx.repo.Category.find({
+      where: category,
+    })
   }
 }

@@ -14,7 +14,7 @@ export default class CategoryController extends BaseController {
     const result = await ctx.service.categoryService.update(
       ctx.request.body as Category
     )
-    result.affected ? this.success(result) : this.failed()
+    result ? this.success(result) : this.failed()
   }
 
   public async list() {
