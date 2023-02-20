@@ -25,6 +25,7 @@
     "@forsigner/egg-typeorm": "^1.5.1",
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
+    "egg-router-plus": "^2.0.0",
     "egg-scripts": "^2.6.0",
     "mysql": "^2.18.1",
     "typeorm": "^0.3.11"

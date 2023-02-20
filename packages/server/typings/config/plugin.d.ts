@@ -16,6 +16,7 @@ import 'egg-jsonp'
 import 'egg-view'
 import '@forsigner/egg-typeorm'
 import 'egg-cors'
+import 'egg-router-plus'
 import { EggPluginItem } from 'egg'
 declare module 'egg' {
   interface EggPlugin {
@@ -33,5 +34,6 @@ declare module 'egg' {
     view?: EggPluginItem
     typeorm?: EggPluginItem
     cors?: EggPluginItem
+    routerPlus?: EggPluginItem
   }
 }
