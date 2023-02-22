@@ -23,13 +23,13 @@ export class Task extends Base {
   @Column({ default: 0 })
   weight: number
 
-  @Column()
+  @Column({ nullable: true })
   startTime: Date
 
-  @Column()
+  @Column({ nullable: true })
   endTime: Date
 
-  @ManyToOne(() => Category, { nullable: false, eager: true })
+  @ManyToOne(() => Category, { nullable: true, eager: true })
   category: Category
 
   @OneToMany(() => Schedule, (schedule) => schedule.task)
