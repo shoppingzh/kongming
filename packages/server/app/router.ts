@@ -18,5 +18,7 @@ export default (app: Application) => {
 
   apiRouter.post('/schedule', controller.scheduleController.create)
   apiRouter.delete('/schedule', controller.scheduleController.remove)
+  apiRouter.put('/schedule', controller.scheduleController.update)
   apiRouter.get('/schedule', controller.scheduleController.list)
+  apiRouter.get('/schedule/one', controller.scheduleController.getById)
 }
