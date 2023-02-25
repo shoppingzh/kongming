@@ -7,6 +7,7 @@ interface ListQuery {
 }
 
 export default class ScheduleController extends BaseController {
+
   public async create() {
     const { ctx } = this
     const schedule = ctx.request.body as Schedule
@@ -46,4 +47,5 @@ export default class ScheduleController extends BaseController {
     )
     result ? this.success(result) : this.failed()
   }
+
 }

@@ -4,15 +4,17 @@ import { Task } from './Task'
 
 @Entity()
 export class Schedule extends Base {
+
   @Column()
-  percent: number
+    percent: number
 
   @Column({ nullable: true })
-  description: string
+    description: string
 
   @Column({ nullable: true })
-  time: Date
+    time: Date
 
   @ManyToOne(() => Task, (task) => task.scheduleList)
-  task: Task
+    task: Task
+
 }

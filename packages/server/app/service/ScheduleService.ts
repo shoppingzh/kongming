@@ -2,6 +2,7 @@ import { Schedule } from '../entity/Schedule'
 import BaseService from './BaseService'
 
 export default class TaskService extends BaseService {
+
   public async create(schedule: Schedule) {
     schedule.gmtCreate = new Date()
     return await this.ctx.repo.Schedule.insert(schedule)
@@ -34,4 +35,5 @@ export default class TaskService extends BaseService {
       },
     })
   }
+
 }

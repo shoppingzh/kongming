@@ -2,6 +2,7 @@ import { Category } from '../entity/Category'
 import BaseController from './BaseController'
 
 export default class CategoryController extends BaseController {
+
   public async create() {
     const { ctx } = this
     const category = ctx.request.body as Category
@@ -40,4 +41,5 @@ export default class CategoryController extends BaseController {
     )
     this.success(result)
   }
+
 }
