@@ -12,11 +12,17 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
-  extends: ['@shoppingzh', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: [
+    '@shoppingzh',
+    'plugin:@typescript-eslint/recommended'
+  ],
   rules: {
     'array-bracket-newline': [0],
     'id-blacklist': [0],
     'no-param-reassign': [0],
+
+    // ts
+    '@typescript-eslint/no-empty-interface': [0],
     '@typescript-eslint/no-var-requires': [0],
     '@typescript-eslint/no-unused-vars': [0],
   },
