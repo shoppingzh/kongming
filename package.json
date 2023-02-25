@@ -8,6 +8,8 @@
     "docs:build": "pnpm run -C packages/docs build",
     "lint": "eslint packages/**/*.{js,ts,jsx,tsx,vue}",
     "server:dev": "pnpm run -C packages/server dev",
+    "server:start": "pnpm run -C packages/server start",
+    "server:stop": "pnpm run -C packages/server stop",
     "format": "prettier *.{js,ts,jsx,tsx} --write"
   },
   "devDependencies": {
