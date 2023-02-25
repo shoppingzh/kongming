@@ -30,4 +30,12 @@ export default class TaskController extends BaseController {
     const result = await ctx.service.taskService.list(ctx.request.query as any)
     this.success(result)
   }
+
+  public async getById() {
+    const { ctx } = this
+    const result = await ctx.service.taskService.getById(
+      Number(ctx.request.query.id)
+    )
+    result ? this.success(result) : this.failed()
+  }
 }

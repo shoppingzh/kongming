@@ -10,11 +10,13 @@ export default (app: Application) => {
   apiRouter.put('/category', controller.categoryController.update)
   apiRouter.get('/category', controller.categoryController.list)
   apiRouter.delete('/category', controller.categoryController.remove)
+  apiRouter.get('/category/one', controller.categoryController.getById)
 
   apiRouter.post('/task', controller.taskController.create)
   apiRouter.put('/task', controller.taskController.update)
   apiRouter.delete('/task', controller.taskController.remove)
   apiRouter.get('/task', controller.taskController.list)
+  apiRouter.get('/task/one', controller.taskController.getById)
 
   apiRouter.post('/schedule', controller.scheduleController.create)
   apiRouter.delete('/schedule', controller.scheduleController.remove)

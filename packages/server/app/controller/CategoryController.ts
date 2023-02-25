@@ -25,6 +25,14 @@ export default class CategoryController extends BaseController {
     this.success(list)
   }
 
+  public async getById() {
+    const { ctx } = this
+    const result = await ctx.service.categoryService.getById(
+      Number(ctx.request.query.id)
+    )
+    result ? this.success(result) : this.failed()
+  }
+
   public async remove() {
     const { ctx } = this
     const result = await ctx.service.categoryService.remove(

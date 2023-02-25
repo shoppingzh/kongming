@@ -20,4 +20,12 @@ export default class CategoryService extends BaseService {
       where: category,
     })
   }
+
+  public async getById(id: number) {
+    return await this.ctx.repo.Category.findOne({
+      where: {
+        id,
+      },
+    })
+  }
 }

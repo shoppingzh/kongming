@@ -24,4 +24,12 @@ export default class TaskService extends BaseService {
       },
     })
   }
+
+  public async getById(id: number) {
+    return await this.ctx.repo.Task.findOne({
+      where: {
+        id,
+      },
+    })
+  }
 }
