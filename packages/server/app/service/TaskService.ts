@@ -1,4 +1,5 @@
 import { Task } from '../entity/Task'
+import { ListQuery } from '../vo/Task'
 import BaseService from './BaseService'
 
 export default class TaskService extends BaseService {
@@ -24,6 +25,23 @@ export default class TaskService extends BaseService {
         scheduleList: true,
       },
     })
+  }
+
+  public async listByQuery(query: ListQuery) {
+    const qb = this.ctx.repo.Task.createQueryBuilder()
+      .select('t')
+      .from(Task, 't')
+      .leftJoinAndSelect('t.category', 'c')
+    if (query.startTime) {
+      qb.andWhere('t.startTime >= :startTime', { startTime: query.startTime })
+    }
+    if (query.endTime) {
+      qb.andWhere('t.endTime <= :endTime', { endTime: query.endTime })
+    }
+    if (query.categoryId) {
+      qb.andWhere('c.id = :categoryId', { categoryId: query.categoryId })
+    }
+    return await qb.getMany()
   }
 
   public async getById(id: number) {

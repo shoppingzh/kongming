@@ -11,6 +11,7 @@
     "server:start": "pnpm run -C packages/server start",
     "server:stop": "pnpm run -C packages/server stop",
     "server:ci": "pnpm run -C packages/server ci",
+    "server:clean": "pnpm run -C packages/server clean",
     "format": "eslint packages/**/*.{js,ts,jsx,tsx} --fix"
   },
   "devDependencies": {
