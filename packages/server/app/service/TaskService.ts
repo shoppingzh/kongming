@@ -32,11 +32,9 @@ export default class TaskService extends BaseService {
       .select('t')
       .from(Task, 't')
       .leftJoinAndSelect('t.category', 'c')
-    if (query.startTime) {
-      qb.andWhere('t.startTime >= :startTime', { startTime: query.startTime })
-    }
-    if (query.endTime) {
-      qb.andWhere('t.endTime <= :endTime', { endTime: query.endTime })
+    if (query.startTime && query.endTime) {
+      qb.andWhere('t.endTime >= :startTime', { startTime: query.startTime })
+      qb.andWhere('t.startTime <= :endTime', { endTime: query.endTime })
     }
     if (query.categoryId) {
       qb.andWhere('c.id = :categoryId', { categoryId: query.categoryId })
