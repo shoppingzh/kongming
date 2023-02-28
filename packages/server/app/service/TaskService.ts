@@ -39,6 +39,7 @@ export default class TaskService extends BaseService {
     if (query.categoryId) {
       qb.andWhere('c.id = :categoryId', { categoryId: query.categoryId })
     }
+    qb.orderBy('t.endTime', 'DESC')
     return await qb.getMany()
   }
 
