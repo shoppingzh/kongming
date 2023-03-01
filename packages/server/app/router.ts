@@ -17,6 +17,7 @@ export default (app: Application) => {
   apiRouter.delete('/task', controller.taskController.remove)
   apiRouter.get('/task', controller.taskController.list)
   apiRouter.get('/task/one', controller.taskController.getById)
+  apiRouter.get('/task/export', controller.taskController.export)
 
   apiRouter.post('/schedule', controller.scheduleController.create)
   apiRouter.delete('/schedule', controller.scheduleController.remove)

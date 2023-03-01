@@ -42,4 +42,10 @@ export default class TaskController extends BaseController {
     result ? this.success(result) : this.failed()
   }
 
+  public async export() {
+    const { ctx } = this
+    ctx.response.attachment('任务报告.xlsx')
+    ctx.body = await this.service.taskService.exportByQuery(ctx.request.query as unknown as ListQuery)
+  }
+
 }
