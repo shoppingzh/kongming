@@ -32,6 +32,9 @@ export default class TaskService extends BaseService {
       .select('t')
       .from(Task, 't')
       .leftJoinAndSelect('t.category', 'c')
+    if (query.keyword) {
+      qb.andWhere('(t.title like :keyword or t.description like :keyword or t.target like :keyword)', { keyword: `%${query.keyword}%` })
+    }
     if (query.startTime && query.endTime) {
       qb.andWhere('t.endTime >= :startTime', { startTime: query.startTime })
       qb.andWhere('t.startTime <= :endTime', { endTime: query.endTime })
