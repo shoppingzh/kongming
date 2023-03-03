@@ -30,7 +30,8 @@ export default class TaskController extends BaseController {
 
   public async list() {
     const { ctx } = this
-    const result = await ctx.service.taskService.listByQuery(ctx.request.query as unknown as ListQuery)
+    const result = await ctx.service.taskService
+      .listByQuery(ctx.request.query as unknown as ListQuery, true)
     this.success(result)
   }
 

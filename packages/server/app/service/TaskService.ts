@@ -5,12 +5,45 @@ import { Style, Workbook } from 'exceljs'
 import dayjs from 'dayjs'
 import { align, eachAllCell, fgColorFill, font } from '../util/excel'
 import { merge } from 'lodash'
+import { TaskParticipant } from '../entity/TaskParticipant'
 
 export default class TaskService extends BaseService {
 
+  private async updateParticipants(task: Task) {
+    const list = task.participants || []
+    const insertList: TaskParticipant[] = []
+    const updateList: TaskParticipant[] = []
+    list.forEach(o => {
+      (o.id ? updateList : insertList).push(o)
+    })
+
+    // 删除全部
+    await this.ctx.repo.TaskParticipant.createQueryBuilder()
+      .delete()
+      .from(TaskParticipant, 'p')
+      .andWhere('task.id = :taskId', { taskId: task.id })
+      .execute()
+
+    // 新增
+    if (list.length) {
+      await this.ctx.repo.TaskParticipant.insert(list.map(p => ({
+        ...p,
+        task,
+        gmtCreate: new Date()
+      })))
+    }
+  }
+
   public async create(task: Task) {
     task.gmtCreate = new Date()
-    return await this.ctx.repo.Task.insert(task)
+    const result = await this.ctx.repo.Task.insert(task)
+    if (!result.identifiers || !result.identifiers.length) return result
+
+    const taskId = result.identifiers[0].id
+    task.id = taskId
+
+    await this.updateParticipants(task)
+    return result
   }
 
   public async remove(id: number) {
@@ -18,7 +51,14 @@ export default class TaskService extends BaseService {
   }
 
   public async update(task: Task) {
-    return await BaseService.update(this.ctx.repo.Task, task)
+    task.gmtModify = new Date()
+    await this.updateParticipants(task)
+    task.participants = await this.ctx.repo.TaskParticipant.find({
+      where: {
+        task
+      }
+    })
+    return await this.ctx.repo.Task.save(task)
   }
 
   public async list(task: Task) {
@@ -31,13 +71,19 @@ export default class TaskService extends BaseService {
     })
   }
 
-  public async listByQuery(query: ListQuery, loadScheduleList?: boolean) {
+  public createListQueryBuilder(query: Partial<ListQuery>, loadScheduleList?: boolean, loadParticipants?: boolean) {
     const qb = this.ctx.repo.Task.createQueryBuilder()
       .select('t')
       .from(Task, 't')
       .leftJoinAndSelect('t.category', 'c')
     if (loadScheduleList) {
       qb.leftJoinAndSelect('t.scheduleList', 's')
+    }
+    if (loadParticipants) {
+      qb.leftJoinAndSelect('t.participants', 'p')
+    }
+    if (query.id) {
+      qb.andWhere('t.id = :id', { id: query.id })
     }
     if (query.keyword) {
       qb.andWhere('(t.title like :keyword or t.description like :keyword or t.target like :keyword)', { keyword: `%${query.keyword}%` })
@@ -50,19 +96,19 @@ export default class TaskService extends BaseService {
       qb.andWhere('c.id = :categoryId', { categoryId: query.categoryId })
     }
     qb.orderBy('t.endTime', 'DESC')
-    return await qb.getMany()
+    return qb
+  }
+
+  public async listByQuery(query: ListQuery, loadScheduleList?: boolean, loadParticipants?: boolean) {
+    return await this.createListQueryBuilder(query, loadScheduleList, loadParticipants).getMany()
   }
 
   public async getById(id: number) {
-    return await this.ctx.repo.Task.findOne({
-      where: {
-        id,
-      },
-    })
+    return await this.createListQueryBuilder({ id }, true, true).getOne()
   }
 
   public async exportByQuery(query: ListQuery) {
-    const list = await this.listByQuery(query, true)
+    const list = await this.listByQuery(query, true, true)
     const wb = new Workbook()
     const sheet = wb.addWorksheet('导出报', {
       properties: {
@@ -87,16 +133,16 @@ export default class TaskService extends BaseService {
       key: 'target',
       width: 28.3,
     }, {
-      header: ['', '计划分解'],
+      header: ['', '计划分解（WBS）'],
       key: 'wbs',
       width: 25.54,
     }, {
       header: ['', '优先级'],
-      key: 'priority',
+      key: 'priorityText',
       width: 10.34,
     }, {
       header: ['', '责任人/协助人'],
-      key: 'author',
+      key: 'participantText',
       width: 15.14,
     }, {
       header: ['', '任务权重'],
@@ -124,11 +170,13 @@ export default class TaskService extends BaseService {
     }]
     sheet.addRows(list.map((o, index) => ({
       order: index + 1,
+      priorityText: o.priority,
       categoryName: o.category.name,
+      participantText: (o.participants || []).map(o => o.name).join(' / '),
       progressText: o.scheduleList
         .map(o => `${dayjs(o.time).format('YYYY-MM-DD')}: ${o.description}`)
         .join('\n'),
-      progress: o.scheduleList.length ? `${o.scheduleList[o.scheduleList.length - 1].percent}%` : 0,
+      progress: o.scheduleList.length ? `${o.scheduleList[o.scheduleList.length - 1].percent}%` : '0%',
       ...o,
     })))
 
@@ -162,7 +210,7 @@ export default class TaskService extends BaseService {
       row.height = 35
     });
     // 进展列自动换行
-    ['title', 'progressText']
+    ['title', 'wbs', 'target', 'progressText']
       .forEach(key => {
         sheet.getColumnKey(key).eachCell(cell => {
           merge(cell.style, {

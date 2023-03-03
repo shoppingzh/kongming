@@ -9,7 +9,9 @@ export default class BaseService extends Service {
     entity: E
   ): Promise<boolean> {
     entity.gmtModify = new Date()
-    const result = await repo.update(entity.id, entity)
+    const result = await repo.update({
+      id: entity.id
+    } as any, entity)
     return !!result.affected && result.affected > 0
   }
 
