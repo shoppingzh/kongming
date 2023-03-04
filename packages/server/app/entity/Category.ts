@@ -7,4 +7,7 @@ export class Category extends Base {
   @Column()
     name: string
 
+  @Column({ nullable: true })
+    color: string
+
 }
