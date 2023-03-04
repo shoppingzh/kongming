@@ -6,6 +6,10 @@ export default (app: Application) => {
 
   router.get('/', controller.homeController.index)
 
+  apiRouter.get('/globals', controller.globalsController.get)
+  apiRouter.post('/globals', controller.globalsController.update)
+  apiRouter.put('/globals', controller.globalsController.update)
+
   apiRouter.post('/category', controller.categoryController.create)
   apiRouter.put('/category', controller.categoryController.update)
   apiRouter.get('/category', controller.categoryController.list)

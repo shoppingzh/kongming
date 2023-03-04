@@ -4,6 +4,7 @@
 import 'egg';
 import ExportBaseController from '../../../app/controller/BaseController';
 import ExportCategoryController from '../../../app/controller/CategoryController';
+import ExportGlobalsController from '../../../app/controller/GlobalsController';
 import ExportHomeController from '../../../app/controller/HomeController';
 import ExportScheduleController from '../../../app/controller/ScheduleController';
 import ExportTaskController from '../../../app/controller/TaskController';
@@ -12,6 +13,7 @@ declare module 'egg' {
   interface IController {
     baseController: ExportBaseController;
     categoryController: ExportCategoryController;
+    globalsController: ExportGlobalsController;
     homeController: ExportHomeController;
     scheduleController: ExportScheduleController;
     taskController: ExportTaskController;
