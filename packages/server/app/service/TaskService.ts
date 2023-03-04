@@ -1,10 +1,10 @@
 import { Task } from '../entity/Task'
-import { ListQuery } from '../vo/Task'
+import { ExportQuery, ListQuery } from '../vo/Task'
 import BaseService from './BaseService'
 import { Style, Workbook } from 'exceljs'
 import dayjs from 'dayjs'
-import { align, eachAllCell, fgColorFill, font } from '../util/excel'
-import { merge } from 'lodash'
+import { align, allBorder, eachAllCell, fgColorFill, font } from '../util/excel'
+import { flatten, merge } from 'lodash'
 import { TaskParticipant } from '../entity/TaskParticipant'
 
 export default class TaskService extends BaseService {
@@ -95,7 +95,11 @@ export default class TaskService extends BaseService {
     if (query.categoryId) {
       qb.andWhere('c.id = :categoryId', { categoryId: query.categoryId })
     }
-    qb.orderBy('t.endTime', 'DESC')
+    if (query.orderBy) {
+      qb.orderBy(`t.${query.orderBy}`, query.orderAsc ? 'ASC' : 'DESC')
+    } else {
+      qb.orderBy('t.endTime', 'DESC')
+    }
     return qb
   }
 
@@ -107,10 +111,14 @@ export default class TaskService extends BaseService {
     return await this.createListQueryBuilder({ id }, true, true).getOne()
   }
 
-  public async exportByQuery(query: ListQuery) {
-    const list = await this.listByQuery(query, true, true)
+  public async exportByQuery(query: ExportQuery) {
+    const list = await this.listByQuery({
+      ...query,
+      orderBy: 'startTime',
+      orderAsc: true,
+    }, true, true)
     const wb = new Workbook()
-    const sheet = wb.addWorksheet('导出报', {
+    const sheet = wb.addWorksheet(query.sheetName || '个人工作', {
       properties: {
         defaultRowHeight: 35,
         defaultColWidth: 90
@@ -168,7 +176,18 @@ export default class TaskService extends BaseService {
       key: 'progress',
       width: 10.77,
     }]
-    sheet.addRows(list.map((o, index) => ({
+    // 按照分类归类、重排
+    const categoryTaskListMap = list.reduce((map, task) => {
+      let subList = map[task.category.name]
+      if (!subList) {
+        map[task.category.name] = (subList = [])
+      }
+      subList.push(task)
+      return map
+    }, {} as Record<string, Task[]>)
+    const sortedList = flatten(Object.values(categoryTaskListMap))
+
+    sheet.addRows(sortedList.map((o, index) => ({
       order: index + 1,
       priorityText: o.priority,
       categoryName: o.category.name,
@@ -180,7 +199,7 @@ export default class TaskService extends BaseService {
       ...o,
     })))
 
-    // 表头
+    // 表头：合并、背景色
     sheet.mergeCells({ top: 1, bottom: 1, left: 1, right: 9 });
     (sheet.getRows(1, 2) || []).forEach((row, index) => {
       row.height = 30
@@ -205,9 +224,23 @@ export default class TaskService extends BaseService {
       })
     })
 
+    // 合并分类行
+    Object.values(categoryTaskListMap).reduce((rowNumber, taskList) => {
+      const toRowNumber = rowNumber + taskList.length - 1
+      if (toRowNumber - rowNumber > 0) {
+        sheet.mergeCells({
+          left: 2,
+          right: 2,
+          top: rowNumber,
+          bottom: toRowNumber,
+        })
+      }
+      return toRowNumber + 1
+    }, 3)
+
     // 默认行高
     sheet.getRows(3, sheet.rowCount - 2)?.forEach(row => {
-      row.height = 35
+      row.height = 50
     });
     // 进展列自动换行
     ['title', 'wbs', 'target', 'progressText']
@@ -223,13 +256,23 @@ export default class TaskService extends BaseService {
         })
       })
 
-    // 所有单元格垂直居中
+    // 所有单元格垂直居中、边框黑色
     eachAllCell(sheet, (cell) => {
       merge(cell.style, {
         alignment: {
           vertical: 'middle'
-        }
+        },
+        border: allBorder('thin', 'FF000000'),
       } as Style)
+    }, true);
+    // 部分列内容水平居中
+    ['order', 'categoryName', 'target', 'priorityText', 'weight', 'participantText', 'startTime', 'endTime', 'progress'].forEach(key => {
+      sheet.getColumnKey(key).eachCell((cell, rowNumber) => {
+        if (rowNumber <= 2) return
+        merge(cell.style, {
+          alignment: align('center')
+        } as Style)
+      })
     })
 
     return await wb.xlsx.writeBuffer()

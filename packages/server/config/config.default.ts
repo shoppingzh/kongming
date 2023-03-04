@@ -23,7 +23,7 @@ export default (appInfo: EggAppInfo) => {
     password: 'xpzheng',
     database: 'kongming',
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: ['app/entity/**/*.ts'],
     migrations: ['app/migration/**/*.ts'],
     subscribers: ['app/subscriber/**/*.ts'],

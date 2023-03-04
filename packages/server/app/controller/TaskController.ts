@@ -1,5 +1,5 @@
 import { Task } from '../entity/Task'
-import { ListQuery } from '../vo/Task'
+import { ExportQuery, ListQuery } from '../vo/Task'
 import BaseController from './BaseController'
 
 
@@ -46,7 +46,7 @@ export default class TaskController extends BaseController {
   public async export() {
     const { ctx } = this
     ctx.response.attachment('任务报告.xlsx')
-    ctx.body = await this.service.taskService.exportByQuery(ctx.request.query as unknown as ListQuery)
+    ctx.body = await this.service.taskService.exportByQuery(ctx.request.query as unknown as ExportQuery)
   }
 
 }
