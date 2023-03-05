@@ -6,6 +6,14 @@ const plugin: EggPlugin = {
   //   enable: true,
   //   package: 'egg-view-nunjucks',
   // },
+  passport: {
+    enable: true,
+    package: 'egg-passport'
+  },
+  passportLocal: {
+    enable: true,
+    package: 'egg-passport-local'
+  },
   typeorm: {
     enable: true,
     package: '@forsigner/egg-typeorm',

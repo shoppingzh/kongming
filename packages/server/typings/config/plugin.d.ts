@@ -14,6 +14,8 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
+import 'egg-passport';
+import 'egg-passport-local';
 import '@forsigner/egg-typeorm';
 import 'egg-cors';
 import 'egg-router-plus';
@@ -32,6 +34,8 @@ declare module 'egg' {
     static?: EggPluginItem;
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
+    passport?: EggPluginItem;
+    passportLocal?: EggPluginItem;
     typeorm?: EggPluginItem;
     cors?: EggPluginItem;
     routerPlus?: EggPluginItem;

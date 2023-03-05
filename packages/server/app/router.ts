@@ -2,6 +2,9 @@ import { Application } from 'egg'
 
 export default (app: Application) => {
   const { controller, router } = app
+
+  // app.passport.authenticate('local')
+
   const apiRouter = app.router.namespace('/api')
 
   router.get('/', controller.homeController.index)

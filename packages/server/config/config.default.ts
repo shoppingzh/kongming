@@ -34,6 +34,11 @@ export default (appInfo: EggAppInfo) => {
     },
   }
 
+  config.passportLocal = {
+    usernameField: 'username',
+    passwordField: 'password',
+  }
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
